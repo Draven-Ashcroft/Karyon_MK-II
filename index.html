@@ -5,19 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RNA Pol II — Nucleoplasm</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  /* Fonts use system fallbacks (sans-serif / monospace) — no external
+     @import, so privacy browsers like Cromite that block external requests
+     render correctly. The layout already specifies 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif and
+     'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace everywhere, which fall back cleanly. */
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
     background:#03050a; min-height:100vh;
     display:flex; flex-direction:column; align-items:center;
-    font-family:'Inter',sans-serif; overflow-x:hidden;
+    font-family:'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif; overflow-x:hidden;
     padding:14px 16px 28px; gap:0;
   }
   .header { text-align:center; margin-bottom:12px; margin-top:2px; }
-  .eyebrow { font-family:'Space Mono',monospace; font-size:clamp(15px,4.2vw,24px); font-weight:700; letter-spacing:0.5px; color:rgba(220,245,255,0.95); text-transform:none; margin-bottom:5px; }
-  .title { font-family:'Inter',sans-serif; font-size:clamp(12px,3.2vw,17px); font-weight:400; color:rgba(0,200,255,0.82); letter-spacing:0.3px; }
+  .eyebrow { font-family:'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; font-size:clamp(15px,4.2vw,24px); font-weight:700; letter-spacing:0.5px; color:rgba(220,245,255,0.95); text-transform:none; margin-bottom:5px; }
+  .title { font-family:'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif; font-size:clamp(12px,3.2vw,17px); font-weight:400; color:rgba(0,200,255,0.82); letter-spacing:0.3px; }
   .title span { color:#00c8ff; font-weight:600; }
-  .subtitle { font-family:'Inter',sans-serif; font-size:clamp(11px,2.6vw,13px); color:rgba(160,220,255,0.72); font-weight:400; letter-spacing:0.6px; margin-top:4px; }
+  .subtitle { font-family:'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif; font-size:clamp(11px,2.6vw,13px); color:rgba(160,220,255,0.72); font-weight:400; letter-spacing:0.6px; margin-top:4px; }
   .dish-wrap { position:relative; flex-shrink:0; }
   canvas.main-canvas { display:block; border-radius:50%; cursor:crosshair; }
   .narrative p { font-size:clamp(11.5px,2.9vw,13px); color:rgba(212,236,255,0.96); line-height:1.6; font-weight:400; transition:opacity 0.3s; }
@@ -28,18 +31,17 @@
   .step-card {
     background:rgba(20,40,70,0.42); border:1px solid rgba(90,200,255,0.20);
     border-radius:9px; padding:9px 11px;
-    font:400 clamp(11px,2.7vw,12.5px)/1.5 'Inter',sans-serif;
+    font:400 clamp(11px,2.7vw,12.5px)/1.5 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif;
     color:rgba(212,236,255,0.95);
     opacity:0; transform:translateY(10px);
     transition:opacity 0.45s ease, transform 0.45s ease;
-    will-change:opacity, transform;
   }
   .step-card.show { opacity:1; transform:translateY(0); }
   .step-card.dim  { opacity:0.4; }
   .step-card strong { color:#3ad2ff; font-weight:600; }
   .step-card .step-title { display:block; color:#8ce0cd; font-weight:600; margin-bottom:2px; letter-spacing:0.3px; }
   .card-strip { width:100%; max-width:520px; display:flex; flex-direction:column; min-height:180px; }
-  .card-strip-title { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2.5px; color:rgba(0,180,255,0.65); text-transform:uppercase; margin-bottom:6px; padding-left:2px; }
+  .card-strip-title { font-family:'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; font-size:10px; letter-spacing:2.5px; color:rgba(0,180,255,0.65); text-transform:uppercase; margin-bottom:6px; padding-left:2px; }
   .info-card {
     background:rgba(5,15,35,0.85); border:1px solid rgba(0,150,220,0.14);
     border-radius:10px; padding:11px 13px; cursor:pointer; transition:all 0.2s;
@@ -51,7 +53,7 @@
   .info-card.active { background:rgba(0,40,90,0.9); border-color:var(--cc); }
   .card-icon { width:30px; height:30px; border-radius:7px; background:rgba(0,0,0,0.3); border:1px solid var(--cc); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; }
   .card-body { flex:1; min-width:0; }
-  .card-name { font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; color:var(--cc); }
+  .card-name { font-family:'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; font-size:9.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; color:var(--cc); }
   .card-detail { font-size:clamp(10px,2.5vw,11.5px); color:rgba(170,210,240,0.75); line-height:1.55; font-weight:300; }
   .card-detail strong { color:rgba(210,235,255,0.9); font-weight:500; }
   .card-chevron { font-size:13px; color:var(--cc); opacity:0.35; align-self:center; flex-shrink:0; transition:opacity 0.2s,transform 0.2s; }
@@ -82,6 +84,14 @@
     background:rgba(0,180,255,0.04); border:1px solid rgba(0,180,255,0.14);
     border-radius:10px; padding:11px 15px; min-height:52px;
     display:flex; flex-direction:column; justify-content:center; gap:3px;
+    transition:opacity 0.4s ease, max-height 0.5s ease, min-height 0.5s ease, padding 0.5s ease, margin 0.5s ease, border-width 0.5s ease;
+    max-height:300px; overflow:hidden;
+  }
+  /* Collapsed once processing/translation begins — reclaims the space. */
+  .narrative.narrative-hidden {
+    opacity:0; max-height:0; min-height:0;
+    padding-top:0; padding-bottom:0; margin:0; border-width:0;
+    pointer-events:none;
   }
   /* Material 3 — vertical segmented speed pill */
   .speed-pill-v {
@@ -109,7 +119,7 @@
   .spd-btn:disabled { color:rgba(0,200,255,0.18); cursor:default; }
   .spd-div { width:20px; height:1px; background:rgba(0,200,255,0.14); flex-shrink:0; }
   .spd-val {
-    font-family:'Space Mono',monospace; font-size:8.5px; letter-spacing:0.2px;
+    font-family:'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; font-size:8.5px; letter-spacing:0.2px;
     color:rgba(0,200,255,0.78); height:26px;
     display:flex; align-items:center; justify-content:center;
     width:34px; pointer-events:none;
@@ -141,13 +151,17 @@
   .sigma-red.active   { box-shadow:0 0 9px 2px rgba(255,72,72,0.65); }
   .sigma-red:disabled, .sigma-green:disabled { cursor:default; }
   .sigma-label {
-    font-family:'Space Mono',monospace; font-size:8.5px;
+    font-family:'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; font-size:8.5px;
     color:rgba(190,210,255,0.55); pointer-events:none;
   }
   .sigma-hint {
     width:100%; max-width:520px; margin:-4px 0 10px;
-    font:500 0.74rem/1.35 'Inter',sans-serif;
+    font:500 0.74rem/1.35 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif;
     color:rgba(190,215,255,0.82); text-align:left;
+  }
+  .sigma-hint .geo-glyph {
+    color:rgba(255,150,150,0.95); font-weight:700;
+    font-size:1.05em; padding:0 1px;
   }
   /* ── Organelle calling card ─────────────────────────────────── */
   #organelle-card {
@@ -163,11 +177,11 @@
   }
   #organelle-card.hidden { opacity:0; pointer-events:none; }
   .ocard-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:9px; }
-  #ocard-title { font:700 0.92rem/1.3 'Space Mono',monospace; color:rgba(220,195,255,1); letter-spacing:0.3px; }
+  #ocard-title { font:700 0.92rem/1.3 'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; color:rgba(220,195,255,1); letter-spacing:0.3px; }
   #ocard-close { background:none; border:none; cursor:pointer; color:rgba(180,155,225,0.60); font-size:1.15rem; line-height:1; padding:0 0 0 10px; flex-shrink:0; transition:color 0.15s; }
   #ocard-close:hover { color:#fff; }
-  #ocard-body { font:400 0.80rem/1.58 'Inter',sans-serif; color:rgba(195,180,228,0.88); }
-  #ocard-tag { display:inline-block; margin-top:9px; font:600 0.68rem/1 'Space Mono',monospace; letter-spacing:1.5px; text-transform:uppercase; color:rgba(140,100,255,0.75); background:rgba(140,100,255,0.10); border:1px solid rgba(140,100,255,0.22); border-radius:4px; padding:3px 7px; }
+  #ocard-body { font:400 0.80rem/1.58 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif; color:rgba(195,180,228,0.88); }
+  #ocard-tag { display:inline-block; margin-top:9px; font:600 0.68rem/1 'Space Mono','Roboto Mono','DejaVu Sans Mono','SF Mono',ui-monospace,'Courier New',monospace; letter-spacing:1.5px; text-transform:uppercase; color:rgba(140,100,255,0.75); background:rgba(140,100,255,0.10); border:1px solid rgba(140,100,255,0.22); border-radius:4px; padding:3px 7px; }
   /* ── RNA processing control buttons (UI only). These replace the
      σ-factor green/red controls in their exact slot — same pill,
      same position — once hnRNA has fully recentred and Pol II/DNA
@@ -248,7 +262,7 @@
      fades in, holds briefly, then fades out on its own. */
   .mrna-export-hint {
     width:100%; max-width:520px; margin:-4px 0 10px;
-    font:400 0.70rem/1.3 'Inter',sans-serif;
+    font:400 0.70rem/1.3 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif;
     color:rgba(140,235,190,0.80); text-align:left;
     opacity:0; transition:opacity 0.7s ease;
     pointer-events:none;
@@ -258,7 +272,7 @@
      translation begins. Same subtle treatment as the export hint. */
   .translation-hint {
     width:100%; max-width:520px; margin:-4px 0 10px;
-    font:500 0.74rem/1.3 'Inter',sans-serif;
+    font:500 0.74rem/1.3 'Inter','Roboto','Segoe UI','Helvetica Neue',system-ui,sans-serif;
     color:rgba(150,240,200,0.92); text-align:left;
     opacity:0; transition:opacity 0.8s ease;
     pointer-events:none;
@@ -277,8 +291,8 @@
 </div>
 <div class="narrative-row">
   <div class="narrative" id="narrative">
-    <p id="narr1"><strong>RNA Polymerase II</strong> transcribes protein-coding genes inside the <strong>nucleoplasm</strong> of the nucleus.</p>
-    <p id="narr2">The camera is zooming in from the whole cell toward the nucleus, where transcription will take place.</p>
+    <p id="narr1"><strong>Transcription factors</strong> initiate transcription in eukaryotes.</p>
+    <p id="narr2">Zooming from the whole cell toward the nucleus, where transcription begins.</p>
     <div id="stepStack" class="step-stack"></div>
   </div>
   <div class="speed-pill-v">
@@ -314,7 +328,16 @@
           <line x1="8.12" y1="8.12" x2="12" y2="12"/>
         </svg>
       </button>
-      <button class="rna-proc-btn rna-proc-cross" id="btnDegrade" title="">×</button>
+      <button class="rna-proc-btn rna-proc-cross" id="btnDegrade" title="Begin translation">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="6"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+          <line x1="12" y1="1.5" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="22.5"/>
+          <line x1="1.5" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="22.5" y2="12"/>
+        </svg>
+      </button>
     </div>
   </div>
 </div>
@@ -365,6 +388,38 @@
       <p class="card-detail">The growing transcript is <strong>hnRNA</strong>: <strong>green</strong> segments are exons (retained), <strong>red</strong> segments are introns (spliced out before the mature mRNA is exported).</p>
     </div>
     <span class="card-chevron">›</span>
+  </div>
+
+  <!-- Processing / translation STEP cards — hidden by default; swapped into
+       this same strip (replacing the transcription cards) as steps advance,
+       so step info reuses this space instead of stacking elsewhere. -->
+  <div class="info-card phase-card step-explore hidden" id="card-step-capping" style="--cc:#4ad2ff">
+    <div class="card-icon">🎩</div>
+    <div class="card-body">
+      <p class="card-name">5′ Capping</p>
+      <p class="card-detail">Addition of <strong>methyl-7-guanosine (m⁷G) phosphate</strong> to the <strong>5′ end</strong> of the mRNA.</p>
+    </div>
+  </div>
+  <div class="info-card phase-card step-explore hidden" id="card-step-tailing" style="--cc:#4ad2ff">
+    <div class="card-icon">🧵</div>
+    <div class="card-body">
+      <p class="card-name">Poly-A Tailing</p>
+      <p class="card-detail">Addition of many <strong>adenylate residues</strong> at the tail region (the <strong>3′ poly-A tail</strong>).</p>
+    </div>
+  </div>
+  <div class="info-card phase-card step-explore hidden" id="card-step-splicing" style="--cc:#37e07a">
+    <div class="card-icon">✂️</div>
+    <div class="card-body">
+      <p class="card-name">Splicing</p>
+      <p class="card-detail">Removal of <strong>introns</strong> (non-coding sequences) and joining of <strong>exons</strong> by means of <strong>spliceosomes</strong>.</p>
+    </div>
+  </div>
+  <div class="info-card phase-card step-explore hidden" id="card-step-translation" style="--cc:#f5c542">
+    <div class="card-icon">🔬</div>
+    <div class="card-body">
+      <p class="card-name" id="step-translation-name">Translation</p>
+      <p class="card-detail" id="step-translation-detail">The ribosome assembles on the mRNA to begin protein synthesis.</p>
+    </div>
   </div>
 </div>
 
@@ -493,10 +548,7 @@ function startCapping() {
   cappingState = 'attention';
   cappingStateT = 0;
   cappingGlowT = 0;
-  setProcessingNarrative(
-    '5′ Capping',
-    'Addition of <strong>methyl-7-guanosine (m⁷G) phosphate</strong> to the <strong>5′ end</strong> of the mRNA.'
-  );
+  showStepInStrip('capping');
 }
 
 // Updates the main narrative card with an RNA-processing step description
@@ -531,6 +583,14 @@ function maybeShowMrnaExportCaption() {
     setTimeout(() => hint.classList.remove('visible'), 3200);
   }
   startMrnaExport(); // begin the deterministic nuclear-export chain simulation
+}
+
+// Updates the persistent guidance line (the sigmaHint element) with the
+// next action the user should take. Uses the ⌖ geolocation glyph so the
+// text points at the crosshair button. Called at each translation stage.
+function setGuidanceHint(html) {
+  const el = document.getElementById('sigmaHint');
+  if (el) el.innerHTML = html;
 }
 
 // Stage 4 Step 5 — marks the Capping button's UI as complete. Does not
@@ -622,10 +682,7 @@ function startSplicing() {
   spliceIntrons[0].stage = 'recognition';
   spliceIntrons[0].stateT = 0;
   splicingState = 'running';
-  setProcessingNarrative(
-    'Splicing',
-    'Removal of <strong>introns</strong> (non-coding sequences) and joining of <strong>exons</strong> by means of <strong>spliceosomes</strong>.'
-  );
+  showStepInStrip('splicing');
 }
 
 // Marks the Splicing button's UI as complete — same subtle treatment as
@@ -687,12 +744,12 @@ const HNRNA_SEGMENTS = [
 ];
 
 const narratives = {
-  cell:    ['A eukaryotic cell contains many membrane-bound <strong>organelles</strong> — each with a specific function.','The nucleus, rough ER, Golgi apparatus, and mitochondria all work together to support gene expression and protein synthesis.'],
-  nucleus: ['The <strong>nucleus</strong> houses the cell\'s DNA and is the site of transcription.','RNA Polymerase II transcribes protein-coding genes here, in the <strong>nucleoplasm</strong> — distinct from the nucleolus where ribosomal RNA is made.'],
-  dna:     ['<strong>DNA</strong> in the nucleoplasm is organised as a coiled double helix, looping through the space around the nucleolus.','The two strands are held together by <strong>hydrogen bonds</strong> between base pairs, shown here as connecting rungs.'],
-  pol2:    ['<strong>Transcription factors</strong> initiate transcription in eukaryotes — <strong>RNA Polymerase II</strong> binds the promoter and moves along the DNA template, unwinding the helix just ahead of it.','As it travels, the strand <strong>glows</strong> at the active site — the region currently being transcribed.'],
-  hnrna:   ['The transcript produced by RNA Pol II is <strong>heterogeneous nuclear RNA (hnRNA)</strong>, the unprocessed precursor to mRNA.','It contains alternating <strong>exons</strong> (green, coding sequence retained) and <strong>introns</strong> (red, non-coding sequence removed during splicing).'],
-  none:    ['<strong>Transcription factors</strong> initiate transcription in eukaryotes, where <strong>RNA Polymerase II</strong> transcribes protein-coding genes inside the <strong>nucleoplasm</strong>.','The camera is zooming in from the whole cell toward the nucleus, where transcription will take place.']
+  cell:    ['A eukaryotic cell holds many membrane-bound <strong>organelles</strong>.','The nucleus, ER, Golgi and mitochondria work together in gene expression.'],
+  nucleus: ['The <strong>nucleus</strong> houses the DNA and is the site of transcription.','RNA Pol II works in the <strong>nucleoplasm</strong>, distinct from the nucleolus.'],
+  dna:     ['<strong>DNA</strong> coils as a double helix through the nucleoplasm.','The strands are held by <strong>hydrogen bonds</strong> between base pairs.'],
+  pol2:    ['<strong>Transcription factors</strong> initiate transcription in eukaryotes.','<strong>RNA Pol II</strong> tracks the DNA template, the strand <strong>glowing</strong> at the active site.'],
+  hnrna:   ['The transcript is <strong>hnRNA</strong> — the precursor to mRNA.','It alternates <strong>exons</strong> (green, kept) and <strong>introns</strong> (red, spliced out).'],
+  none:    ['<strong>Transcription factors</strong> initiate transcription in eukaryotes.','Zooming from the whole cell toward the nucleus, where transcription begins.']
 };
 
 // Map phase → which card IDs are visible
@@ -715,6 +772,33 @@ function updateCardsForPhase(p) {
     else card.classList.add('hidden');
   });
   document.getElementById('card-strip-title').textContent = phaseTitles[p] || 'Click structure to explore';
+}
+
+// Swaps the explore strip to show a single processing/translation STEP card
+// in place of the transcription cards (DNA/Pol II/hnRNA), reusing the same
+// space. `stepId` is the id suffix (e.g. 'capping','translation'); pass a
+// title/detail to update the translation card's text for its sub-stages.
+function showStepInStrip(stepId, title, detail) {
+  // Processing/translation has begun — the step strip now carries the
+  // storytelling, so hide the (now redundant) top narrative block and
+  // reclaim its space.
+  const nrow = document.getElementById('narrative');
+  if (nrow) nrow.classList.add('narrative-hidden');
+  // Hide the phase-9 transcription explore cards.
+  ['card-dna','card-pol2','card-hnrna'].forEach(id => {
+    const c = document.getElementById(id); if (c) c.classList.add('hidden');
+  });
+  // Hide any other step cards, show the requested one.
+  document.querySelectorAll('.step-explore').forEach(c => c.classList.add('hidden'));
+  const card = document.getElementById('card-step-' + stepId);
+  if (card) card.classList.remove('hidden');
+  // For the translation card, allow live title/detail updates per sub-stage.
+  if (stepId === 'translation') {
+    if (title)  { const n = document.getElementById('step-translation-name');   if (n) n.textContent = title; }
+    if (detail) { const d = document.getElementById('step-translation-detail'); if (d) d.innerHTML   = detail; }
+  }
+  const t = document.getElementById('card-strip-title');
+  if (t) t.textContent = 'Processing in progress';
 }
 
 function selectCard(id) {
@@ -741,25 +825,22 @@ function selectCard(id) {
 function arc(x,y,r){ ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); }
 
 function computeSize(){
-  const maxH=window.innerHeight*0.42, maxW=Math.min(window.innerWidth-32,520);
-  return Math.round(Math.min(maxH,maxW));
+  const winH = window.innerHeight || document.documentElement.clientHeight || 600;
+  const winW = window.innerWidth  || document.documentElement.clientWidth  || 360;
+  const maxH = winH*0.44, maxW = Math.min(winW - 20, 560);
+  const size = Math.round(Math.min(maxH, maxW));
+  return (size && size > 40) ? size : 320;
 }
 function applySize(){
-  SIZE=computeSize(); CX=SIZE/2; CY=SIZE/2;
-  // Backing store is rendered at SIZE * dpr * SUPERSAMPLE physical pixels.
-  // The extra SUPERSAMPLE factor gives resolution headroom for the phase-9
-  // camera, which zooms in on the nucleus by several times — without it,
-  // magnifying a ~520px render by ~4-6x is what made the DNA (the finest
-  // detail) look soft/blurry. CSS size stays at SIZE so on-screen layout is
-  // unaffected; only the internal pixel density goes up. Capped so we never
-  // allocate an absurd buffer on very high-DPI phones.
+  SIZE = computeSize(); CX = SIZE/2; CY = SIZE/2;
   const baseDpr = window.devicePixelRatio || 1;
-  // Modest supersample for crispness under zoom, conservatively capped —
-  // oversized canvas backing buffers can cause render corruption or crashes
-  // in memory-constrained mobile webviews. Keep total DPR ≤ ~2.5.
-  const SUPERSAMPLE = baseDpr >= 3 ? 1.0 : (baseDpr >= 2 ? 1.2 : 1.6);
-  dpr = Math.min(baseDpr * SUPERSAMPLE, 2.5); // hard cap to bound memory/perf
-  mainCanvas.width = Math.round(SIZE * dpr);
+  // Supersample gives crisp lines under zoom, but the backing store is
+  // (SIZE*dpr)² pixels redrawn every frame — on phones that's the main
+  // cause of animation stutter. Cap at 2.0 so mobile GPUs keep 60fps during
+  // the physics-heavy mRNA movement; desktop still looks crisp.
+  const SUPERSAMPLE = baseDpr >= 3 ? 0.9 : (baseDpr >= 2 ? 1.05 : 1.4);
+  dpr = Math.min(baseDpr * SUPERSAMPLE, 2.0);
+  mainCanvas.width  = Math.round(SIZE * dpr);
   mainCanvas.height = Math.round(SIZE * dpr);
   mainCanvas.style.width = SIZE + 'px';
   mainCanvas.style.height = SIZE + 'px';
@@ -768,16 +849,16 @@ function applySize(){
 }
 
 function drawDishBG(){
-  arc(CX,CY,SIZE*0.485);
-  const bg=ctx.createRadialGradient(CX-SIZE*0.1,CY-SIZE*0.15,0,CX,CY,SIZE*0.485);
+  arc(CX,CY,SIZE*0.496);
+  const bg=ctx.createRadialGradient(CX-SIZE*0.1,CY-SIZE*0.15,0,CX,CY,SIZE*0.496);
   bg.addColorStop(0,'#020810'); bg.addColorStop(0.7,'#010508'); bg.addColorStop(1,'#010306');
   ctx.fillStyle=bg; ctx.fill();
 }
 
 function drawGlass(){
   const x=CX,y=CY,r=SIZE*0.49;
-  const dof=ctx.createRadialGradient(x,y,r*0.73,x,y,r*0.975);
-  dof.addColorStop(0,'rgba(0,0,0,0)'); dof.addColorStop(1,'rgba(0,0,14,0.52)');
+  const dof=ctx.createRadialGradient(x,y,r*0.90,x,y,r*0.975);
+  dof.addColorStop(0,'rgba(0,0,0,0)'); dof.addColorStop(1,'rgba(0,0,14,0.45)');
   ctx.fillStyle=dof; arc(x,y,r*0.975); ctx.fill();
 
   ctx.save(); arc(x,y,r*0.975);
@@ -832,7 +913,7 @@ function drawWholeCell() {
   const fadeIn = clamp(p8 / 0.06, 0, 1);
   ctx.save(); ctx.globalAlpha = fadeIn;
 
-  const CELL_R = S * 0.49;
+  const CELL_R = S * 0.462;
   const NUC_R  = S * 0.155;  // final nucleus radius
   const NF     = NUC_R;
 
@@ -850,7 +931,7 @@ function drawWholeCell() {
   // ── Clip everything to just OUTSIDE the cell boundary — organelles stay
   // contained, but the outer phospholipid head row (which sits at
   // CELL_R + headR) is included rather than clipped off. ──
-  ctx.beginPath(); ctx.arc(CX, CY, CELL_R - S*0.005, 0, Math.PI*2); ctx.clip();
+  ctx.beginPath(); ctx.arc(CX, CY, CELL_R + S*0.002, 0, Math.PI*2); ctx.clip();
 
   // ── Shared palette (BioRender-style, matches reference) ──────
   const MEM_STROKE = 'rgba(148,105,210,0.82)';
@@ -1120,8 +1201,8 @@ function drawWholeCell() {
   if (mitoA > 0) {
     ctx.save(); ctx.globalAlpha = mitoA * 0.92;
     const mitos = [
-      { x: NUC_CX - NF*2.10, y: NUC_CY - NF*1.10, a: -0.38, rxi: NF*0.42, ryi: NF*0.20 },
-      { x: NUC_CX - NF*2.00, y: NUC_CY - NF*0.35, a:  0.22, rxi: NF*0.38, ryi: NF*0.18 },
+      { x: NUC_CX - NF*1.75, y: NUC_CY - NF*0.95, a: -0.38, rxi: NF*0.42, ryi: NF*0.20 },
+      { x: NUC_CX - NF*1.70, y: NUC_CY - NF*0.30, a:  0.22, rxi: NF*0.38, ryi: NF*0.18 },
     ];
     mitos.forEach(m => {
       ctx.save(); ctx.translate(m.x, m.y); ctx.rotate(m.a);
@@ -1152,8 +1233,12 @@ function drawWholeCell() {
   drawHomingLock();
 
   // ── Plasma membrane — phospholipid bilayer ───────────────────────
-  const memA2 = clamp((p8 - 0.62) / 0.20, 0, 1);
-  if (memA2 > 0) {
+  // Faded out during the translation close-up (when the ribosome binds the
+  // mRNA), so the zoomed-in view isn't cluttered by the cell's edge — fully
+  // visible otherwise (e.g. the whole-cell zoomed-out view).
+  let memA2 = clamp((p8 - 0.62) / 0.20, 0, 1);
+  if (translationInitiationStarted) memA2 = 0; // fully hidden during the translation close-up
+  if (memA2 > 0.005) {
     ctx.save(); ctx.globalAlpha = fadeIn * memA2;
 
     const nMols      = 120;
@@ -1162,9 +1247,14 @@ function drawWholeCell() {
     const tailSpread = S * 0.0048;
     const bilayerW   = headR * 2 + tailLen * 2;
 
-    const rOHead = CELL_R + headR;
-    const rIHead = CELL_R - bilayerW + headR;
-    const rMid   = CELL_R - headR - tailLen;
+    // Anchor the bilayer slightly INSIDE CELL_R so the outer head row sits
+    // comfortably within the canvas bound (radius 0.5). This leaves room
+    // for the cell/dish clips to INCLUDE the outer heads rather than cut
+    // them off — the outer hydrophilic heads are now fully visible.
+    const memR   = CELL_R - headR - S*0.004;
+    const rOHead = memR + headR;               // outer heads (~0.483·S from centre)
+    const rIHead = memR - bilayerW + headR;    // inner heads
+    const rMid   = memR - headR - tailLen;     // tail midline
 
     ctx.strokeStyle = 'rgba(210,155,60,0.85)';
     ctx.lineWidth   = S * 0.0018;
@@ -2181,10 +2271,7 @@ function startPolyATailing() {
   polyAStateT = 0;
   polyAGrowIdx = 0;
   tailingActive = true; // shows the brief cyan 3′ placeholder glow during activation
-  setProcessingNarrative(
-    'Poly-A Tailing',
-    'Addition of many <strong>adenylate residues</strong> at the tail region (the <strong>3′ poly-A tail</strong>).'
-  );
+  showStepInStrip('tailing');
 }
 
 function markPolyATailingComplete() {
@@ -2998,6 +3085,7 @@ function updateMrnaExport() {
     cap.y = exportLerp(ch.wp2.y, ch.wp3.y, t);
     if (exportStateT >= EXPORT_RELEASE_FRAMES) {
       exportState = 'settled'; exportStateT = 0;
+      setGuidanceHint('Click a <strong>ribosome</strong> to navigate the mRNA to it');
       // Explicit state transition: MRNA_EXPORT_COMPLETE — handled by
       // updateMrnaCytoplasmicFree() below, which detaches the chain from
       // this export path system and hands it off to free-floating
@@ -3202,7 +3290,7 @@ function drawMrnaExportChain() {
         ctx.restore();
         // the letter itself
         ctx.save();
-        ctx.font = `bold ${(nucR*0.032).toFixed(1)}px 'Space Mono', monospace`;
+        ctx.font = `bold ${(nucR*0.032).toFixed(1)}px 'Space Mono','Roboto Mono',ui-monospace,monospace`;
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillStyle = 'rgba(255,228,120,0.97)';
         ctx.shadowColor = 'rgba(255,200,80,0.75)';
@@ -3658,7 +3746,7 @@ function updateMrnaCytoplasmicFree() {
 
   const { NUC_CX, NUC_CY, nucR } = nucGeometry();
   const ch = exportChain;
-  const CELL_R = SIZE * 0.49;
+  const CELL_R = SIZE * 0.462;
 
   if (mrnaFreeState === 'MRNA_EXPORT_COMPLETE') {
     // Detach from the export path system, and CAPTURE each node's current
@@ -3718,6 +3806,7 @@ function updateMrnaCytoplasmicFree() {
       mrnaBindState = 'TRANSLATING';
       if (boundRibosome) boundRibosome.state = RIBOSOME_BOUND;
       showTranslationCaption();
+      setGuidanceHint('Click <span class="geo-glyph">⌖</span> to magnify the ribosome');
     }
   }
 
@@ -3806,16 +3895,15 @@ function initRibosomesIfNeeded() {
   if (ribosomes) return;
   const { NUC_CX, NUC_CY, nucR } = nucGeometry();
   const NF = nucR; // nucleus-relative unit, so placement scales with the cell
-  // Hand-placed in the clear cytoplasmic gaps, AWAY from the organelles:
-  //  - Golgi sits lower-right (~+1.8, +1.05 NF), mitochondria upper-left
-  //    (~-2.1, -1.1 and -2.0, -0.35 NF), rough ER hugs the nucleus.
-  // These spots sit in the open spaces between those.
+  // Free-floating in open cytoplasm — verified clear of every organelle
+  // (Golgi lower-right, mitochondria upper-left) and the plasma membrane,
+  // well-spread so each is easy to tap.
   const spots = [
-    { x: NUC_CX + NF*1.7,  y: NUC_CY - NF*1.5 },  // upper right
-    { x: NUC_CX + NF*2.3,  y: NUC_CY + NF*0.2 },  // right
-    { x: NUC_CX - NF*0.4,  y: NUC_CY + NF*2.2 },  // lower centre
-    { x: NUC_CX - NF*2.0,  y: NUC_CY + NF*1.4 },  // lower left
-    { x: NUC_CX + NF*0.5,  y: NUC_CY - NF*2.2 },  // top
+    { x: NUC_CX + NF*0.65, y: NUC_CY + NF*1.79 },  // lower centre-right
+    { x: NUC_CX - NF*1.09, y: NUC_CY + NF*1.30 },  // lower left
+    { x: NUC_CX - NF*0.58, y: NUC_CY - NF*1.60 },  // upper centre-left
+    { x: NUC_CX + NF*1.09, y: NUC_CY - NF*1.30 },  // upper right
+    { x: NUC_CX + NF*1.90, y: NUC_CY - NF*0.20 },  // right
   ];
   ribosomes = spots.slice(0, RIBOSOME_COUNT).map((s, i) => ({
     x: s.x, y: s.y, z: 0,
@@ -4435,7 +4523,7 @@ function render(){
 
   ctx.clearRect(0,0,SIZE,SIZE);
   ctx.save();
-  arc(CX,CY,SIZE*0.485); ctx.clip();
+  arc(CX,CY,SIZE*0.496); ctx.clip();
   drawDishBG();
 
   // Camera transform — see currentCameraTransform() for the full
@@ -4570,6 +4658,7 @@ function startTranslationInitiation() {
       'The ribosome separates into its two subunits.',
       'The small <strong>40S subunit</strong> and large <strong>60S subunit</strong> are shown apart — the small one binds the mRNA first.'
     );
+    setGuidanceHint('Click <span class="geo-glyph">⌖</span> to begin <strong>40S</strong> subunit attachment');
     return;
   }
 
@@ -4581,6 +4670,7 @@ function startTranslationInitiation() {
       'The small subunit binds the 5′ cap.',
       'The <strong>40S subunit</strong> travels to the mRNA\'s <strong>5′ m⁷G cap</strong> and seats onto it, ready to scan for the start codon.'
     );
+    setGuidanceHint('Click <span class="geo-glyph">⌖</span> to scan for the start codon');
     return;
   }
 
@@ -4593,6 +4683,7 @@ function startTranslationInitiation() {
       'Scanning for the start codon…',
       'The <strong>40S subunit</strong> moves along the mRNA, reading codon by codon until it finds the first <strong>AUG</strong>.'
     );
+    setGuidanceHint('Once <strong>AUG</strong> is found, click <span class="geo-glyph">⌖</span> for <strong>60S</strong> subunit attachment');
     return;
   }
 
@@ -4604,6 +4695,7 @@ function startTranslationInitiation() {
       'The large subunit joins…',
       'The <strong>60S subunit</strong> moves in to join the 40S, assembling the complete <strong>80S ribosome</strong>.'
     );
+    setGuidanceHint('The <strong>80S ribosome</strong> is assembled — translation begins');
     return;
   }
 }
@@ -4617,7 +4709,10 @@ function startTranslationInitiation() {
 // newest few remain (older ones fade and are removed). line1 = title,
 // line2 = body.
 function setTranslationCard(line1, line2) {
-  pushStepCard(line1, line2);
+  // Translation sub-stage messages now update the single translation card
+  // IN the explore strip (replacing the transcription cards), reusing that
+  // space rather than stacking separately.
+  showStepInStrip('translation', line1, line2);
 }
 
 // Adds a step card to the #stepStack, slides it in from below, dims older
@@ -4871,13 +4966,53 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('organelle-card').classList.add('hidden');
 });
 
+let _initDone = false;
 function init(){
-  applySize();
-  updateCardsForPhase(8);
-  render();
+  if (_initDone) return;          // run exactly once, whichever event fires first
+  if (!mainCanvas || !ctx) return; // canvas not parsed yet — a later event will retry
+  _initDone = true;
+  try {
+    applySize();
+    _lastW = window.innerWidth || document.documentElement.clientWidth || 0;
+    updateCardsForPhase(8);
+    render();
+  } catch (err) {
+    showFatalError((err && err.message) || String(err));
+  }
 }
-window.addEventListener('resize', () => { applySize(); dnaPathPts = null; });
-init();
+// If init throws (e.g. in a restricted webview), show the message on screen
+// instead of leaving a silent black screen — makes diagnosis possible.
+function showFatalError(msg){
+  try {
+    let d = document.getElementById('fatalErr');
+    if (!d) {
+      d = document.createElement('div');
+      d.id = 'fatalErr';
+      d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#300;color:#fdd;font:12px monospace;padding:10px;white-space:pre-wrap;';
+      document.body.appendChild(d);
+    }
+    d.textContent = 'Init error: ' + msg;
+  } catch(e){}
+}
+let _resizeTimer = null;
+let _lastW = 0;
+window.addEventListener('resize', () => {
+  const w = window.innerWidth || document.documentElement.clientWidth || 0;
+  if (Math.abs(w - _lastW) < 8) return;
+  _lastW = w;
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => { applySize(); dnaPathPts = null; }, 200);
+});
+// Start reliably across browsers: try immediately, and also bind to both
+// DOMContentLoaded and load. init() is idempotent (run-once), so whichever
+// fires first in a given browser (Cromite/Brave/Via all differ) starts it.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+window.addEventListener('load', init);
+setTimeout(init, 300);
 </script>
 </body>
 </html>
