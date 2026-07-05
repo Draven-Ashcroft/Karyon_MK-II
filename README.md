@@ -16,15 +16,15 @@ Karyon MK - II is a scientifically accurate, single-file HTML simulation designe
 
 ✨ Features
 
-- 🔹 RNA Polymerase II transcription
-- 🔹 Transcription termination
-- 🔹 5′ mRNA capping (m⁷G cap)
-- 🔹 Poly(A) tail addition
-- 🔹 RNA splicing
-- 🔹 Nuclear export
-- 🔹 Ribosome recognition & binding
-- 🔹 Interactive guided workflow
-- 🔹 Fully offline
+🔹 RNA Polymerase II transcription
+🔹 Transcription termination
+🔹 5′ mRNA capping (m⁷G cap)
+🔹 Poly(A) tail addition
+🔹 RNA splicing
+🔹 Nuclear export
+🔹 Ribosome recognition & binding
+🔹 Interactive guided workflow
+🔹 Fully offline
 
 ---
 
@@ -38,7 +38,7 @@ RNA Polymerase II Transcription → Termination → 5′ Capping → Poly(A) Tai
 
 «📱 Android / iOS
 
-Via Browser (Recommended)»
+Via / Chrome Browser (Recommended)»
 
 «💻 PC
 
