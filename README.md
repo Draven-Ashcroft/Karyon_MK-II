@@ -1,81 +1,85 @@
 <p align="center">
   <img src="assets/repository-banner.png" alt="Karyon MK-II Banner" width="100%">
-</p>🧬 Karyon MK - II
+</p>
 
-<p align="center">RNA Polymerase II Simulator
+# 🧬 Karyon MK - II
 
-An interactive, browser-based educational simulation illustrating eukaryotic gene expression—from RNA Polymerase II transcription through mRNA processing, nuclear export, and ribosome recognition for translation initiation.
+<p align="center">
 
-</p>---
+### RNA Polymerase II Simulator
 
-📖 Overview
+Interactive, browser-based educational simulation of eukaryotic gene expression—from RNA Polymerase II transcription through mRNA processing, nuclear export, and ribosome recognition for translation initiation.
 
-Karyon MK - II is a scientifically accurate, single-file HTML simulation designed for classrooms, lectures, and self-learning. It visualizes the complete early stages of eukaryotic gene expression using guided animations and runs entirely offline—no installation or internet connection required.
-
----
-
-✨ Features
-
-🔹 RNA Polymerase II transcription
-🔹 Transcription termination
-🔹 5′ mRNA capping (m⁷G cap)
-🔹 Poly(A) tail addition
-🔹 RNA splicing
-🔹 Nuclear export
-🔹 Ribosome recognition & binding
-🔹 Interactive guided workflow
-🔹 Fully offline
+</p>
 
 ---
 
-📦 Simulation Workflow
+## 📖 Overview
+
+**Karyon MK - II** is a scientifically accurate, single-file HTML simulation designed for classrooms, lectures, and self-learning. It visualizes the early stages of eukaryotic gene expression through guided animations and runs completely offline—no installation or internet connection required.
+
+---
+
+## ✨ Features
+
+- 🔹 RNA Polymerase II transcription
+- 🔹 Transcription termination
+- 🔹 5′ mRNA capping (m⁷G cap)
+- 🔹 Poly(A) tail addition
+- 🔹 RNA splicing
+- 🔹 Nuclear export
+- 🔹 Ribosome recognition & binding
+- 🔹 Interactive guided workflow
+- 🔹 Fully offline
+
+---
+
+## 📦 Simulation Workflow
 
 RNA Polymerase II Transcription → Termination → 5′ Capping → Poly(A) Tailing → RNA Splicing → Nuclear Export → Ribosome Recognition & Binding
 
 ---
 
-🖥️ Recommended Browsers
+## 🖥️ Recommended Browsers
 
-«📱 Android / iOS
+> **📱 Android / iOS:** **Via Browser** or **Google Chrome** *(Recommended)*
 
-Via / Chrome Browser (Recommended)»
+> **💻 PC:** **Microsoft Edge** *(Recommended)*
 
-«💻 PC
-
-Microsoft Edge (Recommended)»
-
-The simulator works entirely offline once downloaded.
+The simulator runs entirely offline once downloaded.
 
 ---
 
-📜 License
+## 📜 License
 
 GNU General Public License v3.0 (GPL-3.0)
 
 ---
 
-👨‍🏫 Author
+## 👨‍🏫 Author
 
-Draven-Ashcroft
+**Draven-Ashcroft**
 
-DIPS Chain of Institutions, Tanda
+**DIPS Chain of Institutions, Tanda**
 
 ---
 
-🙏 Acknowledgements
+## 🙏 Acknowledgements
 
 Developed with assistance from modern AI tools.
 
 Special thanks to:
 
-- OpenAI (ChatGPT) — scientific review, debugging, and implementation
-- Claude 4.8 (Opus) — implementation assistance and optimization
-- Google Gemini — concept exploration and refinement
+- **OpenAI (ChatGPT)** — scientific review, debugging, and implementation
+- **Anthropic Claude** — implementation assistance and optimization
+- **Google Gemini** — concept exploration and refinement
 
-Inspired by BioRender, Nature Reviews, NCERT Biology, and modern scientific visualization principles.
+Inspired by **BioRender**, **Nature Reviews**, **NCERT Biology**, and modern scientific visualization principles.
 
 ---
 
-<p align="center">From transcription to translation initiation — bringing eukaryotic gene expression to life.
+<p align="center">
+
+### *"From transcription to translation initiation — bringing eukaryotic gene expression to life."*
 
 </p>
